@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Crowd Sourcing DApp</title>
+
+  <!-- Load Ethers.js UMD build -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+  <!-- Prism (optional) for syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-solidity.min.js"></script>
+
+  <!-- Link to your external CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>FundMe DApp Example</h1>
+
+  <!-- Connection status -->
+  <p id="status">Not connected</p>
+
+  <!-- Connect button -->
+  <button id="connectButton">Connect Wallet</button>
+
+  <!-- A centered section for your links -->
+  <div id="centerLinks">
+    <h3>Github</h3>
+    <a href="https://github.com/abogushcoder/CrowdSourcingProject/tree/main" target="_blank">
+      https://github.com/abogushcoder/CrowdSourcingProject/tree/main
+    </a>
+
+    <h3>Sepolia Faucet</h3>
+    <a href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia" target="_blank">
+      https://cloud.google.com/application/web3/faucet/ethereum/sepolia
+    </a>
+
+    <h3>View Contract on Etherscan</h3>
+    <a href="https://sepolia.etherscan.io/address/0x3adcf820588509cd1d9c5b00d7a87cfbdd549422" target="_blank">
+      https://sepolia.etherscan.io/address/0x3adcf820588509cd1d9c5b00d7a87cfbdd549422
+    </a>
+  </div>
+
+  <!-- MAIN CONTENT (Funding / Withdraw) -->
+  <div id="fundSection">
+    <h2>Fund the Contract</h2>
+    <input type="text" id="amountToFund" placeholder="Amount in ETH" />
+    <button id="fundButton">Fund</button>
+
+    <!-- Owner address displayed next to the input -->
+    <div id="ownerAddressContainer">
+      <strong>Contract Owner:</strong> <span id="ownerAddress">N/A</span>
+    </div>
+  </div>
+
+  <div id="withdrawSection">
+    <h2>Withdraw Funds</h2>
+    <button id="withdrawButton">Withdraw</button>
+    <p><em>You must be the contract owner, or this will fail.</em></p>
+
+    <!-- Live contract balance in ETH -->
+    <p>
+      <strong>Contract Balance:</strong>
+      <span id="contractBalance">0</span> ETH
+    </p>
+  </div>
+
+  <!-- Smart Contract Code Display -->
+  <div id="smartContractCode">
+    <h2>Smart Contract code</h2>
+    <pre>
+      <code class="language-solidity">
+        //SPDX-License-Identifier: MIT
+        pragma solidity ^0.8.18;
+
+        import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+
+
+        library PriceConverter {
+
+        function getPrice() internal view returns(uint256) {
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+
+        (,int256 answer,,,) = priceFeed.latestRoundData();
+        return uint256(answer * 1e10);
+        }
+
+        function getConversionRate(uint256 ethAmount) internal view returns(uint256) {
+        uint256 ethPrice = getPrice();
+        uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1e18;
+        return ethAmountInUsd;
+
+        }
+
+        function getDecimals() internal view returns (uint256) {
+        return AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306).decimals();
+        }
+
+        }
+
+        error NotOwner();
+        error TransactionFailed();
+        error NotEnoughMoney();
+
+        contract FundMe {
+        using PriceConverter for uint256;
+
+        uint256 public constant MINIMUM_USD = 5e18;
+
+        address[] public funders;
+        mapping(address funder =&gt uint256 amountFunded) public addressToAmountFunded;
+        address public immutable i_owner;
+
+        constructor() {
+        i_owner = msg.sender;
+        }
+
+        function fund() public payable {
+        if (msg.value.getConversionRate() &lt MINIMUM_USD) {
+        revert NotEnoughMoney();
+        }
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] += msg.value;
+        }
+
+        function withdraw() public onlyOwner {
+        for (uint256 funderIndex = 0; funderIndex &lt funders.length; funderIndex++) {
+        address funder = funders[funderIndex];
+        addressToAmountFunded[funder] = 0;
+        }
+        funders = new address[](0);
+
+        (bool callSuccess, ) = payable(msg.sender).call{value: address(this).balance}("");
+        if (!callSuccess) {
+        revert TransactionFailed();
+        }
+        }
+
+        modifier onlyOwner() {
+        if (msg.sender != i_owner) {
+        revert NotOwner();
+        }
+        _;
+        }
+
+        receive() external payable {
+        fund();
+        }
+
+        fallback() external payable {
+        fund();
+        }
+        }
+    </pre>
+  </div>
+
+  <!-- Your script AFTER ethers.js is loaded -->
+  <script src="script.js"></script>
+</body>
+
+</html>
