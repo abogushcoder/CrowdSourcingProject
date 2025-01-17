@@ -13,7 +13,7 @@ error NotOwner();
 error TransactionFailed();
 error NotEnoughMoney();
 
-contract FundMe {
+contract CrowdSource {
 
     using PriceConverter for uint256;
 
