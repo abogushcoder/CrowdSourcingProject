@@ -1,42 +1,151 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
+/* ---------------------------------------------------
+   style.css
+   Matrix-like theme, toned-down code highlight
+   Status circle removed
+-----------------------------------------------------*/
+
+/* Universal reset-ish */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Connection status text */
+/* Body styling: dark background with a subtle matrix feel */
+body {
+  background: #000;
+  color: #0f0;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+/* Headings styled in neon green, with a slight glow */
+h1,
+h2,
+h3 {
+  color: #0f0;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+  margin-bottom: 1rem;
+}
+
+/* Paragraph and normal text */
+p {
+  margin-bottom: 1rem;
+  color: #8f8;
+  /* slightly lighter green for paragraphs */
+}
+
+/* A warning notice in bright yellow text */
+#networkWarning {
+  color: #ff0;
+  /* bright yellow */
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Status text (shown below the notice) */
 #status {
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-/* We'll hide these sections until the wallet is connected */
+/* Buttons: neon green borders, glow on hover */
+button {
+  cursor: pointer;
+  background: #111;
+  color: #0f0;
+  border: 2px solid #0f0;
+  padding: 10px 15px;
+  font-family: "Courier New", Courier, monospace;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+button:hover {
+  background: #0f0;
+  color: #000;
+  box-shadow: 0 0 10px #0f0;
+}
+
+/* Input fields: dark with neon border */
+input[type="text"] {
+  background: #111;
+  color: #0f0;
+  border: 1px solid #0f0;
+  padding: 8px 10px;
+  margin-right: 8px;
+  outline: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+  background: #222;
+  border-color: #0ff;
+  /* highlight with bluish glow on focus */
+}
+
+/* Fund & Withdraw sections: neon borders, spacing */
 #fundSection,
 #withdrawSection {
-  margin-top: 2rem;
-  display: none;
+  margin: 2rem 0;
+  padding: 1rem;
+  border: 2px solid #0f0;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
 #ownerAddressContainer {
   margin-top: 1rem;
-  font-style: italic;
+  color: #8f8;
+  /* lighter green text for subtlety */
 }
 
-/* Center the faucet, Etherscan, and Github links */
+/* Contract balance highlight */
+#contractBalance {
+  font-weight: bold;
+  color: #0ff;
+  /* bluish green for contrast */
+}
+
+/* Center the link section with a neon-green box border */
 #centerLinks {
   text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  max-width: 600px;
+  border: 2px solid #0f0;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
+/* H3 within #centerLinks is now a clickable link */
+#centerLinks h3 a {
+  color: #0f0;
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+#centerLinks h3 a:hover {
+  color: #aff;
+  text-shadow: 0 0 5px #0ff;
+}
+
+/* Code block styling: subtle matrix vibe, less-bright green (#0c0) */
 #smartContractCode {
   margin-top: 2rem;
-  background: #f5f5f5;
+  background: #111;
+  border: 2px solid #0f0;
   padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
-/* Styling for code block */
-pre {
-  background: #eee;
-  padding: 1rem;
-  white-space: pre-wrap;
-  /* so long lines wrap */
+#smartContractCode code {
+  color: #0c0;
+  /* toned-down green for readability */
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Optional extra flourish on hover */
+#smartContractCode:hover {
+  box-shadow: 0 0 20px #0f0, 0 0 50px #0f0 inset;
+  transition: box-shadow 0.5s ease;
 }

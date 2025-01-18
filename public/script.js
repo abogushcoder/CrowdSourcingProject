@@ -197,7 +197,6 @@ async function fundContract() {
 
     // Update balance after funding
     await updateContractBalance();
-
   } catch (err) {
     console.error(err);
     alert("Funding failed: " + (err.message || "Unknown error"));
@@ -215,7 +214,6 @@ async function withdrawFunds() {
 
     // Update balance after withdrawal
     await updateContractBalance();
-
   } catch (err) {
     console.error(err);
     alert("Withdraw failed: " + (err.message || "Unknown error"));
