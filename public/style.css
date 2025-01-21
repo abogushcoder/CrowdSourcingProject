@@ -1,17 +1,9 @@
-/* ---------------------------------------------------
-   style.css
-   Matrix-like theme, toned-down code highlight
-   Status circle removed
------------------------------------------------------*/
-
-/* Universal reset-ish */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Body styling: dark background with a subtle matrix feel */
 body {
   background: #000;
   color: #0f0;
@@ -20,7 +12,6 @@ body {
   padding: 20px;
 }
 
-/* Headings styled in neon green, with a slight glow */
 h1,
 h2,
 h3 {
@@ -29,28 +20,22 @@ h3 {
   margin-bottom: 1rem;
 }
 
-/* Paragraph and normal text */
 p {
   margin-bottom: 1rem;
   color: #8f8;
-  /* slightly lighter green for paragraphs */
 }
 
-/* A warning notice in bright yellow text */
 #networkWarning {
   color: #ff0;
-  /* bright yellow */
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-/* Status text (shown below the notice) */
 #status {
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-/* Buttons: neon green borders, glow on hover */
 button {
   cursor: pointer;
   background: #111;
@@ -68,7 +53,6 @@ button:hover {
   box-shadow: 0 0 10px #0f0;
 }
 
-/* Input fields: dark with neon border */
 input[type="text"] {
   background: #111;
   color: #0f0;
@@ -82,10 +66,8 @@ input[type="text"] {
 input[type="text"]:focus {
   background: #222;
   border-color: #0ff;
-  /* highlight with bluish glow on focus */
 }
 
-/* Fund & Withdraw sections: neon borders, spacing */
 #fundSection,
 #withdrawSection {
   margin: 2rem 0;
@@ -97,17 +79,13 @@ input[type="text"]:focus {
 #ownerAddressContainer {
   margin-top: 1rem;
   color: #8f8;
-  /* lighter green text for subtlety */
 }
 
-/* Contract balance highlight */
 #contractBalance {
   font-weight: bold;
   color: #0ff;
-  /* bluish green for contrast */
 }
 
-/* Center the link section with a neon-green box border */
 #centerLinks {
   text-align: center;
   margin: 2rem auto;
@@ -117,7 +95,6 @@ input[type="text"]:focus {
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
-/* H3 within #centerLinks is now a clickable link */
 #centerLinks h3 a {
   color: #0f0;
   text-decoration: none;
@@ -129,7 +106,6 @@ input[type="text"]:focus {
   text-shadow: 0 0 5px #0ff;
 }
 
-/* Code block styling: subtle matrix vibe, less-bright green (#0c0) */
 #smartContractCode {
   margin-top: 2rem;
   background: #111;
@@ -140,11 +116,9 @@ input[type="text"]:focus {
 
 #smartContractCode code {
   color: #0c0;
-  /* toned-down green for readability */
   font-family: "Courier New", Courier, monospace;
 }
 
-/* Optional extra flourish on hover */
 #smartContractCode:hover {
   box-shadow: 0 0 20px #0f0, 0 0 50px #0f0 inset;
   transition: box-shadow 0.5s ease;
